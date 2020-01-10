@@ -6,8 +6,15 @@ function InjectableEnhanced() {
   };
 }
 
-@InjectableEnhanced() // -> does not work
-// @Injectable() // -> works
+// @InjectableEnhanced() // -> does not work
+@Injectable({ providedIn: 'root' }) // -> works
 export class MyService {
   constructor() {}
 }
+
+console.log(
+  'Has ɵprov?',
+  (MyService as any).prototype.constructor.hasOwnProperty('ɵprov')
+);
+
+console.log('Access ɵprov...', (MyService as any).prototype.constructor.ɵprov);
