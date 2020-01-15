@@ -12,6 +12,8 @@ export class MyService {
   constructor() {}
 }
 
+// Injectable({ providedIn: 'root' })(MyService); // -> does not work
+
 console.log(
   'Has ɵprov?',
   (MyService as any).prototype.constructor.hasOwnProperty('ɵprov')
