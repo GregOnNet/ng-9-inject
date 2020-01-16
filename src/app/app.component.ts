@@ -8,6 +8,8 @@ import { MyService } from './my.service';
 })
 export class AppComponent {
   title = 'Injectable';
-  
-  constructor(private my: MyService) {}
+
+  constructor(private my: MyService) {
+    console.log('I am here!', this.my);
+  }
 }

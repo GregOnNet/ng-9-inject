@@ -1,12 +1,23 @@
-import { Injectable } from '@angular/core';
+import { ɵɵdefineInjectable } from '@angular/core';
 
 export function InjectableEnhanced() {
   return <T extends new (...args: any[]) => InstanceType<T>>(target: T) => {
-    Injectable({ providedIn: 'root' })(target);
+    (target as any).ɵfac = function() {
+      throw new Error('cannot create directly');
+    };
+
+    (target as any).ɵprov = ɵɵdefineInjectable({
+      token: target,
+      providedIn: 'root',
+      factory() {
+        return new target();
+      }
+    });
+    return target;
   };
 }
 
-@InjectableEnhanced() // -> does not work
+@InjectableEnhanced() // -> works, after using ɵɵdefineInjectable
 // @Injectable({ providedIn: 'root' }) // -> works
 export class MyService {
   constructor() {}
